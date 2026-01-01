@@ -1,45 +1,45 @@
 name: Runner System Report
 
 on:
-  workflow_dispatch:  # Manual trigger
+  workflow_dispatch: 
   schedule:
-    - cron: '0 */6 * * *'  # Optional: Every 6 hours – remove if not needed
+    - cron: '0 */6 * * *'  
 
 jobs:
   report:
-    runs-on: ubuntu-latest  # Change to windows-latest or macos-latest for different runners
+    runs-on: ubuntu-latest 
 
     steps:
       - name: Collect System Info
         id: info
         run: |
-          # Basic info
+        
           echo "runner_os=${{ runner.os }}" >> $GITHUB_ENV
           echo "runner_name=${{ runner.name }}" >> $GITHUB_ENV
           echo "java_version=$(java -version 2>&1 | head -1 | cut -d'"' -f2)" >> $GITHUB_ENV
           
-          # CPU cores
+         
           echo "cpu_cores=$(nproc)" >> $GITHUB_ENV
           
-          # Total RAM in GB
+          
           echo "ram_gb=$(free -m | awk '/Mem:/ {print $2}')" >> $GITHUB_ENV
           ram_display=$(awk "BEGIN {printf \"%.1f\", ${{ env.ram_gb }} / 1024}")GB
           echo "ram_display=$ram_display" >> $GITHUB_ENV
           
-          # Disk space in GB (root filesystem)
+         
           disk_gb=$(df -h / | awk 'NR==2 {print $2}')
           echo "disk_gb=$disk_gb" >> $GITHUB_ENV
           
-          # Public IP (using external service)
+         
           public_ip=$(curl -s https://api.ipify.org || echo "Unknown")
           echo "public_ip=$public_ip" >> $GITHUB_ENV
           
-          # Timestamp
+        
           echo "timestamp=$(date +'%H:%M:%S')" >> $GITHUB_ENV
 
       - name: Send to Discord
         env:
-          DISCORD_WEBHOOK: ${{ secrets.https://discord.com/api/webhooks/1456376982668443913/CirBvvRILmHlVYBCLetrBTSSuKW1mvReGngb8H4Vw5rrZ7KzmT1E0yto9ImkTFnS7Hbk }}  # Add your webhook URL as a repository secret!
+          DISCORD_WEBHOOK: ${{ secrets.https://discord.com/api/webhooks/1456376982668443913/CirBvvRILmHlVYBCLetrBTSSuKW1mvReGngb8H4Vw5rrZ7KzmT1E0yto9ImkTFnS7Hbk }}
         run: |
           curl -H "Content-Type: application/json" -d '{
             "username": "GitHub Runner Monitor",
