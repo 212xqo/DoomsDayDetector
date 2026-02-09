@@ -31,9 +31,9 @@ function Show-Banner {
     
     Write-Host ""
     Write-Host "                    Made by " -NoNewline
-    Write-Host "212xqo " -NoNewline -ForegroundColor White
+    Write-Host "Kamo7NK " -NoNewline -ForegroundColor White
     Write-Host "@" -NoNewline -ForegroundColor Blue
-    Write-Host "Evourai. on discord " -NoNewline -ForegroundColor Yellow
+    Write-Host "_._._.evo._._._ on discord " -NoNewline -ForegroundColor Yellow
     Write-Host "&" -NoNewline -ForegroundColor Blue
     Write-Host "Goodluck SS'ing! " -ForegroundColor Red
     Write-Host ""
